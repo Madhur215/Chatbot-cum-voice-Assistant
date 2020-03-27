@@ -14,9 +14,10 @@ class create_model:
 		self.network = tflearn.fully_connected(self.network, 8)
 		self.network = tflearn.fully_connected(self.network, 8)
 		self.network = tflearn.fully_connected(self.network, len(output[0]), activation= "softmax")
+		self.network = tflearn.regression(self.network)
 		self.model = tflearn.DNN(self.network)
 
-	def fit_model(self, train, output, n=500, batch = 8, metric=True):
+	def fit_model(self, train, output, n=150, batch = 8, metric=True):
 		self.model.fit(train, output, n_epoch = n, batch_size=batch, show_metric=metric)
 
 	
@@ -35,9 +36,11 @@ class create_model:
 
 	def predict_tag(self, sentence):
 		results = self.model.predict([self.input_words(sentence)])
-		tag = self.tags[np.argmax(results)]
-		return tag
+		# tag = self.tags[np.argmax(results)]
+		return np.argmax(results)
 
+	def get_tags(self):
+		return self.tags
 
 
 
