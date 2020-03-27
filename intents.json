@@ -1,0 +1,32 @@
+{"intents":[
+		{"tag": "greeting",
+		 "all_questions": ["Hi", "Hello", "How are you?", "How do you do?", "Is anyone there?", "What's up?", "Are you fine",
+      	"Howdy"],
+		 "sub_tags":[
+		 	{
+		 		"sub":"normal-greeting",
+		 		"questions": ["Hi", "Hello", "Hey!", "Howdy", "Hola", "Hhh"],
+		 		"answers": ["Hi", "Hello", "Hey!", "Howdy"]
+		 	},
+		 	{
+		 		"sub": "asking",
+		 		"questions": ["How are you?", "How do you do?", "Is anyone there?", "What's up?", "Are you fine", "Hows you?",
+		 			"Whats going on?"],
+		 		"answers": ["I am fine, what about you?", "I am good!", "I am fine, you say"]
+		 	}
+		 ]
+		},
+		{"tag":"name",
+		 "all_questions": ["Hi, what's your name?", "Hello, may I know your name", "Tell me your name?","May I know your name", "whats your good name",
+         "What should I call you?", "Do you have a name?", "what is your name?", "My name is john, what's your name?"],
+         "sub_tags":[
+         	{
+         		"sub": "normal-ask-name",
+         		"questions": ["Hi, what's your name?", "Hello, may I know your name", "Tell me your name?","May I know your name", "whats your good name",
+         		"What should I call you?", "Do you have a name?", "what is your name?"],
+         		"answers": ["I am Boss!", "You can call me Boss!", "My name is Boss!", "Hello, I am Boss", "Good to see you, I am Boss"]
+         	}	
+         ]
+		}
+	]
+}
