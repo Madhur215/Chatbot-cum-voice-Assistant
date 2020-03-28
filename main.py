@@ -7,11 +7,33 @@ from model import create_model
 import random
 import tensorflow as tf
 from prepare import prepare_data
+import calender as cl
+import pyttsx3
+import speech_recognition as sr
 
 stemmer = LancasterStemmer()
 with open("intents.json") as file:
 	data = json.load(file)
 
+
+def speak(text):
+	speaker = pyttsx3.init()
+	speaker.say(text)
+	speaker.runAndWait()
+
+def get_audio():
+	r = sr.Recognizer()
+	with sr.Microphone() as source:
+		audio = r.listen(source)
+		said = ""
+
+		try:
+			said = r.recognize_google(audio)
+			print(said)
+		except Exception as e:
+			print("Exception: " + str(e))
+
+	return said
 
 tags = []				 # Contains all the different tags	
 all_questions_list = []  # Contains the different question with their words tokenized
@@ -32,7 +54,7 @@ tf.reset_default_graph()
 model = create_model(all_questions_train, tags_output, tags, all_question_words)
 model.fit_model(all_questions_train, tags_output)
 
-	# Preparing sub tags models
+# Preparing sub tags models
 sub_tags_list = []
 sub_tags_models = []
 
@@ -80,7 +102,8 @@ def start_chat():
 	print("Welcome!")
 	while True:
 
-		sentence = input("You: ")
+		print("Say something: ")
+		sentence = get_audio()
 		if sentence.lower() == "exit":
 			break
 
@@ -90,14 +113,25 @@ def start_chat():
 			
 		sub_list = tags_dict.get(tag_word)
 		sub_tag_word = sub_list[sub]
-		answers = []
-		ans = answers_dict.get(sub_tag_word)
-		print(random.choice(ans))
 
+		if sub_tag_word == "know-date":
+			date = cl.get_date_for_day(sentence)
+			speak(date)
+			print("Boss: ", date)
+
+		elif sub_tag_word == "get-events":
+			day = cl.get_date(sentence)
+			cl.get_selected_events(cl.authenticate(), day)
+		else:
+			ans = answers_dict.get(sub_tag_word)
+			a = random.choice(ans)
+			speak(a)
+			print("Boss: ", a)
 
 start_chat()	
 
-	
+# day date error
+
 
 
 

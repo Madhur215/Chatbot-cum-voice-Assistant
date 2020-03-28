@@ -27,6 +27,59 @@
          		"answers": ["I am Boss!", "You can call me Boss!", "My name is Boss!", "Hello, I am Boss", "Good to see you, I am Boss"]
          	}	
          ]
+		},
+		{"tag":"days",
+		 "all_questions": ["whats the date on monday?", "whats the date on tuesday?", "whats the date on wednesday?",
+		 			"whats the date on thursday?","whats the date on friday?","whats the date on saturday?","whats the date on sunday?",
+		 			"whats the date on coming sunday?", "whats the date on coming monday?", "whats the date on coming tuesday?",
+		 			"whats the date on coming wednesday?", "whats the date on coming thursday?", "whats the date on coming friday?",
+		 			"whats the date on coming saturday?", "date on coming monday?", "date tomorrow?", "whats the date tomorrow",
+		 			"date monday", "date tuesday", "date wednesday", "date thursday", "date friday", "date saturday",
+		 			"date sunday", "what month is this?", "whats day today", "whats date today",
+		 			"what is sunday?", "what is monday", "what is thursday", "what are days",
+		    		"what are friday","am i busy on sunday","am i busy on 31st august","is there any commitment for 16th febraury", 
+		    		"whats the event on monday","whats the event on tuesday", "whats the event on wednesday",
+		    		"whats the event on thursday", "whats the event on friday", "whats the event on saturday",
+		    		"whats the event on sunday", "do I have plans on sunday", "is there any event on 5th september",
+		    		"do i have plans on friday", "what are my plans on sunday", "what are my plans on monday",
+		    		"tell me my plans on 16th november", "what are my plans on tuesday 13th", 
+		    		"what are my plans on 22nd november", "do I have any event on 21st december", "Is there any event on 30th january",
+		    		"what are events on next monday","do I have any event this tuesday", "events on 21st june",
+		    		"events on 3rd may", "events on coming friday", "plans on next month", "do i have some commitments this thursday",
+		    		"what are my commitments for sunday", "what are commitments for 23rd april"],
+		 "sub_tags": [
+		 	{
+		 		"sub": "know-date",
+		 		"questions": ["whats the date on monday?", "whats the date on tuesday?", "whats the date on wednesday?",
+		 			"whats the date on thursday?","whats the date on friday?","whats the date on saturday?","whats the date on sunday?",
+		 			"whats the date on coming sunday?", "whats the date on coming monday?", "whats the date on coming tuesday?",
+		 			"whats the date on coming wednesday?", "whats the date on coming thursday?", "whats the date on coming friday?",
+		 			"whats the date on coming saturday?", "date on coming monday?", "date tomorrow?", "whats the date tomorrow",
+		 			"date monday", "date tuesday", "date wednesday", "date thursday", "date friday", "date saturday",
+		 			"date sunday", "what month is this?", "whats day today", "whats date today"],
+		 		"answers": ["none-from-here"]
+		    },
+		    {
+		    	"sub": "get-events",
+		    	"questions": ["am i busy on sunday","am i busy on 31st august","is there any commitment for 16th febraury", 
+		    				 "whats the event on monday","whats the event on tuesday", "whats the event on wednesday",
+		    				 "whats the event on thursday", "whats the event on friday", "whats the event on saturday",
+		    				 "whats the event on sunday", "do I have plans on sunday", "is there any event on 5th september",
+		    				 "do i have plans on friday", "what are my plans on sunday", "what are my plans on monday",
+		    				 "tell me my plans on 16th november", "what are my plans on tuesday 13th", 
+		    				 "what are my plans on 22nd november", "do I have any event on 21st december", "Is there any event on 30th january",
+		    				 "what are events on next monday","do I have any event this tuesday", "events on 21st june",
+		    				 "events on 3rd may", "events on coming friday", "plans on next month", "do i have some commitments this thursday",
+		    				 "what are my commitments for sunday", "what are commitments for 23rd april"],
+		    	"answers": ["none"]
+		    },
+		    {
+		    	"sub": "normal",
+		    	"questions": ["what is sunday?", "what is monday", "what is thursday", "what are days",
+		    				 "what are friday"],
+		    	"answers": ["Its just a normal day!", "Don't you have any plans that day?"]
+		    }
+			]
 		}
 	]
 }
