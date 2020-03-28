@@ -4,139 +4,100 @@ import numpy as np
 import json
 import random
 from model import create_model
+import random
 import tensorflow as tf
+from prepare import prepare_data
 
+stemmer = LancasterStemmer()
 with open("intents.json") as file:
 	data = json.load(file)
 
-# try:
 
+tags = []				 # Contains all the different tags	
+all_questions_list = []  # Contains the different question with their words tokenized
+questions_tags = []		 # Contains the questions tags corresponding to the questions in above list
+all_question_words = []	 # Contains all the words in all the questions of the dataset
 
+pr = prepare_data(data)
+all_question_words, tags, all_questions_list, questions_tags = pr.prepare(data, "intents", "all_questions", "tag")
 
-# except:
-	tags = []				 # Contains all the different tags	
-	all_questions_list = []  # Contains the different question with their words tokenized
-	questions_tags = []		 # Contains the questions tags corresponding to the questions in above list
-	all_question_words = []	 # Contains all the words in all the questions of the dataset
+all_questions_train = []
+tags_output = []
 
-	for intent in data["intents"]:
-		for questions in intent["all_questions"]:
+all_questions_train, tags_output = pr.get_training_set()
+all_questions_train = np.array(all_questions_train)
+tags_output = np.array(tags_output)
 
-			token_words = nltk.word_tokenize(questions)
-			all_question_words.extend(token_words)
-			all_questions_list.append(token_words)
-			questions_tags.append(intent["tag"])
-
-		if intent["tag"] not in tags:
-			tags.append(intent["tag"])
-
-
-	stemmer = LancasterStemmer()
-	all_question_words = [stemmer.stem(w.lower()) for w in all_question_words if w != "?" and "!"]
-	all_question_words = sorted(list(set(all_question_words)))
-	tags = sorted(tags)
-
-	all_questions_train = []
-	tags_output = []
-	r = [0 for _ in range(len(tags))]
-
-	for i, word in enumerate(all_questions_list):
-
-		bag_of_words = []
-		word = [stemmer.stem(w.lower()) for w in word]
-		for wr in all_question_words:
-
-			if wr in word:
-				bag_of_words.append(1)
-			else:
-				bag_of_words.append(0)
-
-		row = r[:]
-		row[tags.index(questions_tags[i])] = 1
-		all_questions_train.append(bag_of_words)
-		tags_output.append(row)
-
-	all_questions_train = np.array(all_questions_train)
-	tags_output = np.array(tags_output)
-
-	tf.reset_default_graph()
-	model = create_model(all_questions_train, tags_output, tags, all_question_words)
-	model.fit_model(all_questions_train, tags_output)
+tf.reset_default_graph()
+model = create_model(all_questions_train, tags_output, tags, all_question_words)
+model.fit_model(all_questions_train, tags_output)
 
 	# Preparing sub tags models
-	sub_tags_list = []
-	sub_tags_models = []
+sub_tags_list = []
+sub_tags_models = []
 
-	for intent in data["intents"]:
+for intent in data["intents"]:
 
-		all_words_sub_questions = []
-		all_sub_tags = []
-		sub_question_tags = []
-		all_sub_questions_list = []
+	all_words_sub_questions = []
+	all_sub_tags = []
+	sub_question_tags = []
+	all_sub_questions_list = []
 
-		for sub_tags in intent["sub_tags"]:
-			for questions in sub_tags["questions"]:
-				tk_words = nltk.word_tokenize(questions)
-				all_words_sub_questions.extend(tk_words)
-				all_sub_questions_list.append(tk_words)
-				sub_question_tags.append(sub_tags["sub"])
-
-			if sub_tags["sub"] not in all_sub_tags:
-				all_sub_tags.append(sub_tags["sub"])
-
-		all_words_sub_questions = [stemmer.stem(w.lower()) for w in all_words_sub_questions if w != "?" and "!"]
-		all_words_sub_questions = sorted(list(set(all_words_sub_questions)))
-		all_sub_tags = sorted(all_sub_tags)
-
-		all_sub_questions_train = []
-		sub_tags_output = []
-		r = [0 for _ in range(len(all_sub_tags))]
-	
-		for i, word in enumerate(all_sub_questions_list):
-			bag_of_words = []
-			word = [stemmer.stem(w.lower()) for w in word]
-			for wr in all_words_sub_questions:
-
-				if wr in word:
-					bag_of_words.append(1)
-				else:
-					bag_of_words.append(0)
-
-			row = r[:]
-			row[all_sub_tags.index(sub_question_tags[i])] = 1
-			all_sub_questions_train.append(bag_of_words)
-			sub_tags_output.append(row)
-
-		all_sub_questions_train = np.array(all_sub_questions_train)
-		sub_tags_output = np.array(sub_tags_output)
-
-		sub_model = create_model(all_sub_questions_train, sub_tags_output, all_sub_tags, all_words_sub_questions)
-		sub_model.fit_model(all_sub_questions_train, sub_tags_output)
-		sub_tags_models.append(sub_model)
+	tr = prepare_data(data)
+	all_words_sub_questions, all_sub_tags, all_sub_questions_list, sub_question_tags = tr.prepare(intent, "sub_tags", "questions", "sub")
 		
-		sub_tags_list.extend(all_sub_tags)
+	all_sub_questions_train = []
+	sub_tags_output = []
+	all_sub_questions_train, sub_tags_output = tr.get_training_set()
+	all_sub_questions_train = np.array(all_sub_questions_train)
+	sub_tags_output = np.array(sub_tags_output)
 
-	def start_chat():
+	sub_model = create_model(all_sub_questions_train, sub_tags_output, all_sub_tags, all_words_sub_questions)
+	sub_model.fit_model(all_sub_questions_train, sub_tags_output)
+	sub_tags_models.append(sub_model)
+		
+	sub_tags_list.extend(all_sub_tags)
 
-		print("Welcome!")
-		while True:
+tags_dict = {}
+answers_dict = {}
 
-			sentence = input("You: ")
-			if sentence.lower() == "exit":
-				break
+def prepare_tags_list():
+		
+	for intent in data["intents"]:
+		curr_tag = intent["tag"]
+		s_tags_list = []
+		for sub_tg in intent["sub_tags"]:
+			curr_sub_tag = sub_tg["sub"]
+			s_tags_list.append(curr_sub_tag)
+			answers_dict[curr_sub_tag] = sub_tg["answers"]
 
-			tag = model.predict_tag(sentence)
-			sub_tag = sub_tags_models[tag].predict_tag(sentence)
-			print(sub_tags_list[sub_tag])
+		tags_dict[curr_tag] = s_tags_list
 
-			# TODO only sub tags index being returned. Need to compare the tag also 
-			# to print the result!!
+prepare_tags_list()
 
-	start_chat()
+def start_chat():
+
+	print("Welcome!")
+	while True:
+
+		sentence = input("You: ")
+		if sentence.lower() == "exit":
+			break
+
+		tag = model.predict_tag(sentence)
+		sub = sub_tags_models[tag].predict_tag(sentence)
+		tag_word = tags[tag]
+			
+		sub_list = tags_dict.get(tag_word)
+		sub_tag_word = sub_list[sub]
+		answers = []
+		ans = answers_dict.get(sub_tag_word)
+		print(random.choice(ans))
 
 
+start_chat()	
 
-
+	
 
 
 
