@@ -10,6 +10,8 @@ from prepare import prepare_data
 import calender as cl
 import pyttsx3
 import speech_recognition as sr
+import subprocess
+import datetime
 
 stemmer = LancasterStemmer()
 with open("intents.json") as file:
@@ -83,6 +85,20 @@ for intent in data["intents"]:
 tags_dict = {}
 answers_dict = {}
 
+def note(text):
+    date = datetime.datetime.now()
+    file_name = str(date).replace(":", "-") + "-note.txt"
+    with open(file_name, "w") as f:
+        f.write(text)
+
+    subprocess.Popen(["notepad.exe", file_name])
+
+def make_note():
+	speak("What would you like me to write down? ")
+	write = get_audio()
+	note(write)
+	speak("I've made a note of that.")
+
 def prepare_tags_list():
 		
 	for intent in data["intents"]:
@@ -102,9 +118,11 @@ def start_chat():
 	print("Welcome!")
 	while True:
 
-		print("Say something: ")
+		print("Listening: ")
 		sentence = get_audio()
 		if sentence.lower() == "exit":
+			print("Good bye!")
+			speak("Good bye")
 			break
 
 		tag = model.predict_tag(sentence)
@@ -120,8 +138,24 @@ def start_chat():
 			print("Boss: ", date)
 
 		elif sub_tag_word == "get-events":
-			day = cl.get_date(sentence)
-			cl.get_selected_events(cl.authenticate(), day)
+			try:
+				day = cl.get_date(sentence)
+				cl.get_selected_events(cl.authenticate(), day)
+			except:
+				speak("None")
+				print("Boss: None")
+		elif sub_tag_word == "all-events":
+			try:
+				cl.get_all_events(cl.authenticate())
+			except:
+				print("None")
+				speak("Boss: None")
+		elif sub_tag_word == "make-notes":
+			try:
+				make_note()
+			except:
+				print("Try again!")
+				speak("try again")
 		else:
 			ans = answers_dict.get(sub_tag_word)
 			a = random.choice(ans)

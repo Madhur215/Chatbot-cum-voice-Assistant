@@ -46,7 +46,12 @@
 		    		"what are my plans on 22nd november", "do I have any event on 21st december", "Is there any event on 30th january",
 		    		"what are events on next monday","do I have any event this tuesday", "events on 21st june",
 		    		"events on 3rd may", "events on coming friday", "plans on next month", "do i have some commitments this thursday",
-		    		"what are my commitments for sunday", "what are commitments for 23rd april"],
+		    		"what are my commitments for sunday", "what are commitments for 23rd april",
+		    		"what are my upcoming events", "what are commitments next days", "tell me my upcoming plans",
+					"what are the commitments i have for next days", "tell me all the plans of mine", "what are the plans i have next",
+		    		"give all the plans i have", "upcoming plans", "all upcoming events", "do i have any plans now", 
+		    		"do i have any events", "do i have some commitments now", "is there any event left", "is there any plan i am forgetting",
+		    		"remind me my plans", "remind my the upcoming events"],
 		 "sub_tags": [
 		 	{
 		 		"sub": "know-date",
@@ -77,8 +82,36 @@
 		    	"sub": "normal",
 		    	"questions": ["what is sunday?", "what is monday", "what is thursday", "what are days",
 		    				 "what are friday"],
-		    	"answers": ["Its just a normal day!", "Don't you have any plans that day?"]
+		    	"answers": ["Its just a normal day!", "Do not you have any plans that day?"]
+		    },
+		    {
+		    	"sub": "all-events",
+		    	"questions": ["what are my upcoming events", "what are commitments next days", "tell me my upcoming plans",
+		    				 "what are the commitments i have for next days", "tell me all the plans of mine", "what are the plans i have next",
+		    				 "give all the plans i have", "upcoming plans", "all upcoming events", "do i have any plans now", 
+		    				 "do i have any events", "do i have some commitments now", "is there any event left", "is there any plan i am forgetting",
+		    				 "remind me my plans", "remind my the upcoming events"],
+		    	"answers": ["No upcoming events"]
 		    }
+			]
+		},
+		{
+			"tag": "notes",
+			"all_questions": ["write down for me", "write this down for me", "will you write this for me",
+							 "please write something for me", "could you please write one thing for me", 
+							 "can you make a note", "make a note", "type this", "please type this", "can you type something for me",
+							 "make some note", "remember this", "can you remember one thing for me", "write this", "note it", "note this",
+							 "remember it"],
+			"sub_tags": [
+				{
+					"sub": "make-notes",
+					"questions": ["write down for me", "write this down for me", "will you write this for me",
+								 "please write something for me", "could you please write one thing for me", 
+								 "can you make a note", "make a note", "type this", "please type this", "can you type something for me",
+								 "make some note", "remember this", "can you remember one thing for me", "write this", "note it", "note this",
+								 "remember it"],
+					"answers":["Sure"]
+				}
 			]
 		}
 	]

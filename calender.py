@@ -15,8 +15,8 @@ MONTHS = ["january", "febraury", "march", "april", "may", "june", "july", "augus
 			,"october", "november", "december"]
 DAYS = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
 DAY_EXTENTIONS = ["st", "nd", "th", "rd"]
-MONTH_DAYS = {0:31, 1:28, 2:31, 3:30, 4: 31, 5: 30,
-			 6: 31, 7: 31, 8: 30, 9: 31, 10: 30, 11: 31}
+MONTH_DAYS = {1:31, 2:28, 3:31, 4:30, 5: 31, 6: 30,
+			 7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31}
 
 def speak(text):
 	speaker = pyttsx3.init()
@@ -43,9 +43,17 @@ def get_date(text):
 	if text.count("today") > 0:
 		return today
 	
-	if text.count("tommorrow") > 0:
-		today += datetime.timedelta(days=1)
-		return today
+	if text.count("tomorrow") > 0:
+		day = today.day + 1
+		if day > MONTH_DAYS.get(today.month):
+			day -= MONTH_DAYS.get(today.month)
+		month = today.month
+		year = today.year
+		if month > 11:
+			month -= 11
+			year += 1
+		
+		return datetime.date(month=month, day=day, year=year)
 
 	day = -1
 	day_of_week = -1
@@ -113,18 +121,29 @@ def authenticate():
     # Call the Calendar API
 
 def get_all_events(service):
-    now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
-    print('Getting the upcoming events')
-    events_result = service.events().list(calendarId='primary', timeMin=now,
-                                        maxResults=20, singleEvents=True,
-                                        orderBy='startTime').execute()
-    events = events_result.get('items', [])
+	now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
+	
+	events_result = service.events().list(calendarId='primary', timeMin=now,
+										maxResults=20, singleEvents=True,
+										orderBy='startTime').execute()
+	events = events_result.get('items', [])
 
-    if not events:
-        print('No upcoming events found.')
-    for event in events:
-        start = event['start'].get('dateTime', event['start'].get('date'))
-        print(start, event['summary'])
+	if not events:
+		print('No upcoming events found.')
+	for event in events:
+		speak(f"You have {len(events)} events.")
+
+		for event in events:
+			start = event['start'].get('dateTime', event['start'].get('date'))
+			print(start, event['summary'])
+			start_time = str(start.split("T")[1].split("-")[0])
+			if int(start_time.split(":")[0]) < 12:
+				start_time = start_time + "am"
+			else:
+				start_time = str(int(start_time.split(":")[0])-12)
+				start_time = start_time + "pm"
+
+			speak(event["summary"] + " at " + start_time)
 
 def get_selected_events(service, day):
 	date = datetime.datetime.combine(day, datetime.datetime.min.time())
@@ -159,16 +178,24 @@ def get_date_for_day(text):
 	today = datetime.date.today()
 
 	if text.count("today") > 0:
-		return today.weekday()
-	if text.count("tomorrow") > 0:
-		today += datetime.timedelta(days=1)
 		return today
+	if text.count("tomorrow") > 0:
+		day = today.day + 1
+		if day > MONTH_DAYS.get(today.month):
+			day -= MONTH_DAYS.get(today.month)
+		month = today.month
+		year = today.year
+		if month > 11:
+			month -= 11
+			year += 1
+		
+		return datetime.date(month=month, day=day, year=year)
 
 	for word in text.split():
 		if word in DAYS:
 			# TODO just get the date
 			required_day = DAYS.index(word)
-			diff = required_day - today.weekday() + 1
+			diff = required_day - today.day + 1
 			if diff < 0:
 				diff += 7
 				if text.count("next") >= 1:
