@@ -1,5 +1,3 @@
-import nltk
-from nltk.stem.lancaster import LancasterStemmer
 import numpy as np
 import json
 import random
@@ -12,8 +10,27 @@ import pyttsx3
 import speech_recognition as sr
 import subprocess
 import datetime
+import tkinter as tk
+from tkinter import Text
+import os
 
-stemmer = LancasterStemmer()
+SERVICE = cl.authenticate()
+
+root = tk.Tk()
+root.geometry('500x600')
+heading = tk.Label(root, text="Welcome! Press the Button and ask whatever you want!",
+			       font=('verdana',12,"bold"), fg="orange").pack()
+frame = tk.Frame(root, bg="#FFF")
+frame.place(relwidth=0.8, relheight=0.8, relx=0.1, rely=0.1)
+your_msg = tk.StringVar()
+scroll_bar = tk.Scrollbar(frame)
+msg_list = tk.Listbox(frame, height=20, width=50, yscrollcommand=scroll_bar.set)
+scroll_bar.pack(side=tk.RIGHT, fill=tk.Y)
+msg_list.pack(side=tk.LEFT, fill=tk.BOTH)
+msg_list.pack()
+frame.pack()
+
+
 with open("intents.json") as file:
 	data = json.load(file)
 
@@ -98,6 +115,7 @@ def make_note():
 	write = get_audio()
 	note(write)
 	speak("I've made a note of that.")
+	msg_list.insert(tk.END, "Boss: I've made a note of that.")
 
 def prepare_tags_list():
 		
@@ -113,65 +131,59 @@ def prepare_tags_list():
 
 prepare_tags_list()
 
-def start_chat():
+def main():
 
-	print("Welcome!")
-	while True:
+	sentence = get_audio()
+	msg_list.insert(tk.END, "You: " + sentence)
+	if sentence.count("exit") > 0:
+		msg_list.insert(tk.END, "Boss: Good Bye!")
+		speak("Good bye")
+		root.quit()
+		return
 
-		print("Listening: ")
-		sentence = get_audio()
-		if sentence.lower() == "exit":
-			print("Good bye!")
-			speak("Good bye")
-			break
-
-		tag = model.predict_tag(sentence)
-		sub = sub_tags_models[tag].predict_tag(sentence)
-		tag_word = tags[tag]
+	tag = model.predict_tag(sentence)
+	sub = sub_tags_models[tag].predict_tag(sentence)
+	tag_word = tags[tag]
 			
-		sub_list = tags_dict.get(tag_word)
-		sub_tag_word = sub_list[sub]
+	sub_list = tags_dict.get(tag_word)
+	sub_tag_word = sub_list[sub]
 
-		if sub_tag_word == "know-date":
-			date = cl.get_date_for_day(sentence)
-			speak(date)
-			print("Boss: ", date)
+	if sub_tag_word == "know-date":
+		date = cl.get_date_for_day(sentence)
+		speak(date)
+		msg_list.insert(tk.END, "Boss: " + str(date))
 
-		elif sub_tag_word == "get-events":
-			try:
-				day = cl.get_date(sentence)
-				cl.get_selected_events(cl.authenticate(), day)
-			except:
-				speak("None")
-				print("Boss: None")
-		elif sub_tag_word == "all-events":
-			try:
-				cl.get_all_events(cl.authenticate())
-			except:
-				print("None")
-				speak("Boss: None")
-		elif sub_tag_word == "make-notes":
-			try:
-				make_note()
-			except:
-				print("Try again!")
-				speak("try again")
-		else:
-			ans = answers_dict.get(sub_tag_word)
-			a = random.choice(ans)
-			speak(a)
-			print("Boss: ", a)
-
-start_chat()	
-
-# day date error
-
-
+	elif sub_tag_word == "get-events":
+		try:
+			day = cl.get_date(sentence)
+			cl.get_selected_events(SERVICE, day, msg_list, tk)
+		except:
+			speak("None")
+			msg_list.insert(tk.END, "Boss: None")
+	elif sub_tag_word == "all-events":
+		try:
+			cl.get_all_events(SERVICE, msg_list, tk)
+		except:
+			msg_list.insert(tk.END, "Boss: None")
+			speak("Boss: None")
+	elif sub_tag_word == "make-notes":
+		try:
+			make_note()
+		except:
+			msg_list.insert(tk.END, "Boss: Try again")
+			speak("try again")
+	else:
+		ans = answers_dict.get(sub_tag_word)
+		a = random.choice(ans)
+		speak(a)
+		msg_list.insert(tk.END, "Boss: " + str(a))
+		
+picture = tk.PhotoImage(file = r"D:\Chatbot\images\voice4.png")
+send_button = tk.Button(root, image=picture, command=main)
+send_button.pack()
 
 
-
-
-
+root.mainloop()
 
 
 

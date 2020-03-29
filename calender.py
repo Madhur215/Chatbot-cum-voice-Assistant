@@ -120,7 +120,8 @@ def authenticate():
 
     # Call the Calendar API
 
-def get_all_events(service):
+def get_all_events(service, msg_list, tk):
+
 	now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
 	
 	events_result = service.events().list(calendarId='primary', timeMin=now,
@@ -129,23 +130,25 @@ def get_all_events(service):
 	events = events_result.get('items', [])
 
 	if not events:
-		print('No upcoming events found.')
+		# print('No upcoming events found.')
+		msg_list.insert(tk.END, "Boss: No upcoming events found!")
+
+	speak(f"You have {len(events)} events.")
 	for event in events:
-		speak(f"You have {len(events)} events.")
+		
+		start = event['start'].get('dateTime', event['start'].get('date'))
+		# print(start, event['summary'])
+		msg_list.insert(tk.END, "Boss: " + str(start) + str(event['summary']))
+		start_time = str(start.split("T")[1].split("-")[0])
+		if int(start_time.split(":")[0]) < 12:
+			start_time = start_time + "am"
+		else:
+			start_time = str(int(start_time.split(":")[0])-12) + start_time.split(":")[1]
+			start_time = start_time + "pm"
 
-		for event in events:
-			start = event['start'].get('dateTime', event['start'].get('date'))
-			print(start, event['summary'])
-			start_time = str(start.split("T")[1].split("-")[0])
-			if int(start_time.split(":")[0]) < 12:
-				start_time = start_time + "am"
-			else:
-				start_time = str(int(start_time.split(":")[0])-12)
-				start_time = start_time + "pm"
+		speak(event["summary"] + " at " + start_time)
 
-			speak(event["summary"] + " at " + start_time)
-
-def get_selected_events(service, day):
+def get_selected_events(service, day, msg_list, tk):
 	date = datetime.datetime.combine(day, datetime.datetime.min.time())
 	end_date = datetime.datetime.combine(day, datetime.datetime.max.time())
 	utc = pytz.UTC
@@ -158,12 +161,14 @@ def get_selected_events(service, day):
 
 	if not events:
 		speak('No events found!')
+		msg_list.insert(tk.END, "Boss: No events found!")
 	else:
 		speak(f"You have {len(events)} events on this day.")
 
 		for event in events:
 			start = event['start'].get('dateTime', event['start'].get('date'))
-			print(start, event['summary'])
+			# print(start, event['summary'])
+			msg_list.insert(tk.END, "Boss: " + str(start) + str(event['summary']))
 			start_time = str(start.split("T")[1].split("-")[0])
 			if int(start_time.split(":")[0]) < 12:
 				start_time = start_time + "am"
@@ -181,10 +186,12 @@ def get_date_for_day(text):
 		return today
 	if text.count("tomorrow") > 0:
 		day = today.day + 1
-		if day > MONTH_DAYS.get(today.month):
-			day -= MONTH_DAYS.get(today.month)
 		month = today.month
 		year = today.year
+		if day > MONTH_DAYS.get(today.month):
+			day -= MONTH_DAYS.get(today.month)
+			month += 1
+		
 		if month > 11:
 			month -= 11
 			year += 1
