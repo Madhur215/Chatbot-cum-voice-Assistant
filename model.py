@@ -17,7 +17,7 @@ class create_model:
 		self.network = tflearn.regression(self.network)
 		self.model = tflearn.DNN(self.network)
 
-	def fit_model(self, train, output, n=150, batch = 8, metric=True):
+	def fit_model(self, train, output, n=400, batch = 8, metric=True):
 		self.model.fit(train, output, n_epoch = n, batch_size=batch, show_metric=metric)
 
 	

@@ -13,6 +13,11 @@ import datetime
 import tkinter as tk
 from tkinter import Text
 import os
+import webbrowser as wb
+try:
+	from googlesearch import search
+except:
+	print("googlesearch not imported!")
 
 SERVICE = cl.authenticate()
 
@@ -23,9 +28,11 @@ heading = tk.Label(root, text="Welcome! Press the Button and ask whatever you wa
 frame = tk.Frame(root, bg="#FFF")
 frame.place(relwidth=0.8, relheight=0.8, relx=0.1, rely=0.1)
 your_msg = tk.StringVar()
-scroll_bar = tk.Scrollbar(frame)
-msg_list = tk.Listbox(frame, height=20, width=50, yscrollcommand=scroll_bar.set)
-scroll_bar.pack(side=tk.RIGHT, fill=tk.Y)
+y_scroll_bar = tk.Scrollbar(frame)
+x_scroll_bar = tk.Scrollbar(frame, orient= tk.HORIZONTAL)
+msg_list = tk.Listbox(frame, height=20, width=50, yscrollcommand=y_scroll_bar.set, xscrollcommand=x_scroll_bar.set)
+y_scroll_bar.pack(side=tk.RIGHT, fill=tk.Y)
+x_scroll_bar.pack(side=tk.BOTTOM, fill=tk.X)
 msg_list.pack(side=tk.LEFT, fill=tk.BOTH)
 msg_list.pack()
 frame.pack()
@@ -117,6 +124,17 @@ def make_note():
 	speak("I've made a note of that.")
 	msg_list.insert(tk.END, "Boss: I've made a note of that.")
 
+def perform_google_search():
+	speak("what would you like me to search for")
+	query = get_audio()
+	speak("I have the following results")
+	msg_list.insert(tk.END, "Boss: I have the following results:")
+	for result in search(query, tld="co.in",num=1, stop=1, pause=2):
+		msg_list.insert(tk.END, "Boss: " + str(result))
+		res = result
+
+	wb.open(res)
+
 def prepare_tags_list():
 		
 	for intent in data["intents"]:
@@ -172,6 +190,12 @@ def main():
 		except:
 			msg_list.insert(tk.END, "Boss: Try again")
 			speak("try again")
+	elif sub_tag_word == "search-google":
+		try:
+			perform_google_search()
+		except:
+			msg_list.insert(tk.END, "Boss: An error occurred!")
+			speak("An error occurred")
 	else:
 		ans = answers_dict.get(sub_tag_word)
 		a = random.choice(ans)

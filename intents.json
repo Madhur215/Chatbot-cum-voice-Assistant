@@ -113,6 +113,51 @@
 					"answers":["Sure"]
 				}
 			]
+		},
+		{
+			"tag": "age-work",
+			"all_questions": ["what is your age", "how old are you", "do you have some age",
+							 "are you older than me", "when were you born?", "are you younger than me",
+							 "tell me your age", "are you old", "are you young","what is your work", "what do you do?", "what is your daily routine",
+							 "do you have a job?", "whats your hobby", "what you do in your day",
+							 "do you have any hobby","what do you like to do", "what you love the most"],
+			"sub_tags": [
+				{
+					"sub": "age",
+					"questions": ["what is your age", "how old are you", "do you have some age",
+							 "are you older than me", "when were you born?", "are you younger than me",
+							 "tell me your age", "are you old", "are you young"],
+					"answers": ["Do you really think I would have some age?", "I am a computer programme. How am I supposed to have an age!",
+								"How can I have some age, I am a computer programme!"]
+				},
+				{
+					"sub": "work",
+					"questions": ["what is your work", "what do you do?", "what is your daily routine",
+								 "do you have a job?", "what you do in your day"],
+					"answers": ["I help others", "I do work for others and talk to them",
+								"I help people"]
+				},
+				{
+					"sub": "hobby",
+					"questions": ["what are your hobbies","whats your hobby","do you have any hobby","what do you like to do", "what you love the most"],
+					"answers": ["I like to talk to people very much.", "I like talking with people and helping them!"]
+				}
+			]
+		},
+		{
+			"tag": "google-search",
+			"all_questions": ["can you search something for me", "search this for me","make a google search",
+							 "hey, can you search one thing for me", "can you search something on google",
+							 "perform a google search", "search on google", "search google"],
+			"sub_tags": [
+				{
+					"sub": "search-google",
+					"questions": ["can you search something for me", "search this for me","make a google search",
+								"hey, can you search one thing for me", "can you search something on google",
+								"perform a google search", "search on google", "search google"],
+					"answers": ["Sure, let me search!"]
+				}
+			]
 		}
 	]
 }
