@@ -6,8 +6,17 @@ This a chatbot cum voice assistant that can be used for different purposes. It c
 4. Make notes to write down something using notepad.
 
 WORKING:
-The model is made using tflearn module to make the neural network which takes the sentence from the user and gives an appropriate tag, with which it thinks the sentence is related to(refer to the intents.json file).
-There are actually two models used in this, one to find the tag and other to find the sub-tag in the given tag. This increases the accuracy of the model and helps get better and likely results. 
-
+The working of the assistant is pretty simple.
+First, a simple GUI shows up, in which you can see all your ongoing conversation.
+When we click on the speak icon, it detects the voice and converts it to text using
+speech_recognition module. 
+On the text, first NLP is applied that creates a bag of words model which is then passed to a pretrained neural network made using the tflearn module. This network returns the "tag" with whichthe sentence is associated(see intents.json). 
+This "tag" is then used to find the "sub tag" with which the sentence is associated
+again with the help of the same model.
+Once, the subtags is determined, it returns the appropriate answer associated with that
+subtag, and the pyttsx3 module is used to speak the answer.
+All the features like extracting the events from Google Calender have been defined
+inside the calender.py file and the NLP has been applied in prepare.py
+For the working with Google Calender you first need to get an API_KEY from Google developers page.
 
 
