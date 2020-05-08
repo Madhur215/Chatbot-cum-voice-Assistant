@@ -130,7 +130,7 @@ def get_all_events(service, msg_list, tk):
 	events = events_result.get('items', [])
 
 	if not events:
-		# print('No upcoming events found.')
+		print('No upcoming events found.')
 		msg_list.insert(tk.END, "Boss: No upcoming events found!")
 
 	speak(f"You have {len(events)} events.")

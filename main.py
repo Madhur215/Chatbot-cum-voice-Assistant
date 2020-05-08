@@ -14,6 +14,8 @@ import tkinter as tk
 from tkinter import Text
 import os
 import webbrowser as wb
+import threading 
+import time
 try:
 	from googlesearch import search
 except:
@@ -157,12 +159,11 @@ def main():
 		msg_list.insert(tk.END, "Boss: Good Bye!")
 		speak("Good bye")
 		root.quit()
-		return
 
 	tag = model.predict_tag(sentence)
 	sub = sub_tags_models[tag].predict_tag(sentence)
 	tag_word = tags[tag]
-			
+				
 	sub_list = tags_dict.get(tag_word)
 	sub_tag_word = sub_list[sub]
 
@@ -183,7 +184,7 @@ def main():
 			cl.get_all_events(SERVICE, msg_list, tk)
 		except:
 			msg_list.insert(tk.END, "Boss: None")
-			speak("Boss: None")
+			speak("None")
 	elif sub_tag_word == "make-notes":
 		try:
 			make_note()
@@ -202,12 +203,15 @@ def main():
 		speak(a)
 		msg_list.insert(tk.END, "Boss: " + str(a))
 		
-picture = tk.PhotoImage(file = r"D:\Chatbot\images\voice4.png")
-send_button = tk.Button(root, image=picture, command=main)
+
+def run():
+	main_thread = threading.Thread(target=main)
+	main_thread.start()
+
+
+picture = tk.PhotoImage(file = r"D:\Python Projects\Chatbot\images\voice4.png")
+send_button = tk.Button(root, image=picture, command=run)
 send_button.pack()
 
-
 root.mainloop()
-
-
 
