@@ -158,6 +158,21 @@
 					"answers": ["Sure, let me search!"]
 				}
 			]
+		},
+		{
+			"tag": "weather-api-call",
+			"all_questions": ["can you tell me something about the weather conditions", "what is the current weather conditions","I want to go out now is it raining",
+							 "hey, how is the weather", "hey, tell me about the weather conditions i want to go out for a walk",
+							 "what is the current temperature", "Is it cloudy outside", "is it sunny outside", "is it raining", "how is the weather"],
+			"sub_tags": [
+				{
+					"sub": "call-weather-api",
+					"questions": ["can you tell me something about the weather conditions", "what is the current weather conditions","I want to go out now is it raining",
+							 "hey, how is the weather", "hey, tell me about the weather conditions i want to go out for a walk",
+							 "what is the current temperature", "Is it cloudy outside", "is it sunny outside", "is it raining", "how is the weather"],
+					"answers": ["Sure, let me find out"]
+				}
+			]
 		}
 	]
 }
