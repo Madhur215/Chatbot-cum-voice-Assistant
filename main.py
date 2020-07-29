@@ -16,6 +16,7 @@ import os
 import webbrowser as wb
 import threading
 import time
+import weather
 
 try:
     from googlesearch import search
@@ -173,7 +174,14 @@ def main():
     sub_list = tags_dict.get(tag_word)
     sub_tag_word = sub_list[sub]
 
-    if sub_tag_word == "know-date":
+    if sub_tag_word == "call-weather-api":
+        speak("Please tell me the name of the city")
+        city = get_audio()
+        print("city: " + str(city))
+        weather_conditions = weather.get_weather(str(city))
+        speak(weather_conditions)
+        msg_list.insert(tk.END, "Boss: " + str(weather_conditions))
+    elif sub_tag_word == "know-date":
         date = cl.get_date_for_day(sentence)
         speak(date)
         msg_list.insert(tk.END, "Boss: " + str(date))
