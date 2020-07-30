@@ -174,7 +174,13 @@ def main():
     sub_list = tags_dict.get(tag_word)
     sub_tag_word = sub_list[sub]
 
-    if sub_tag_word == "call-weather-api":
+    if sub_tag_word == "visual-studio-code-open":
+        path = "C:\\Users\\hp\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+        ans = answers_dict.get(sub_tag_word)
+        a = random.choice(ans)
+        speak(a)
+        os.startfile(path)
+    elif sub_tag_word == "call-weather-api":
         speak("Please tell me the name of the city")
         city = get_audio()
         print("city: " + str(city))

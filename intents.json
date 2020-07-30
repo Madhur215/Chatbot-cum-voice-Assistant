@@ -173,6 +173,21 @@
 					"answers": ["Sure, let me find out"]
 				}
 			]
+		},
+		{
+			"tag": "open-visual-studio-code",
+			"all_questions": ["Hey! open Visual Studio code", "Can you open visual studio for me",
+							 "hey, open visual studio for me", "Hello I want to do some coding",
+							 "open VS code", "Hey open VS code", "Can you open VS code for me", "hey, open VS code for me"],
+			"sub_tags": [
+				{
+					"sub": "visual-studio-code-open",
+					"questions": ["Hey! open Visual Studio code", "Can you open visual studio for me",
+							 "hey, open visual studio for me", "Hello I want to do some coding",
+							 "open VS code", "Hey open VS code", "Can you open VS code for me", "hey, open VS code for me"],
+					"answers": ["Sure sir, opening, please wait!"]
+				}
+			]
 		}
 	]
 }
