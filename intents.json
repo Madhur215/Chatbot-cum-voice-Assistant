@@ -176,16 +176,46 @@
 		},
 		{
 			"tag": "open-visual-studio-code",
-			"all_questions": ["Hey! open Visual Studio code", "Can you open visual studio for me",
-							 "hey, open visual studio for me", "Hello I want to do some coding",
-							 "open VS code", "Hey open VS code", "Can you open VS code for me", "hey, open VS code for me"],
+			"all_questions": ["Hey open Visual Studio code", "Can you open visual studio for me",
+							 "hey open visual studio for me", "Hello I want to do some coding",
+							 "open VS code", "Hey open VS code", "Can you open VS code for me", "hey open VS code for me"],
 			"sub_tags": [
 				{
 					"sub": "visual-studio-code-open",
-					"questions": ["Hey! open Visual Studio code", "Can you open visual studio for me",
-							 "hey, open visual studio for me", "Hello I want to do some coding",
-							 "open VS code", "Hey open VS code", "Can you open VS code for me", "hey, open VS code for me"],
-					"answers": ["Sure sir, opening, please wait!"]
+					"questions": ["Hey open Visual Studio code", "Can you open visual studio for me",
+							 "hey open visual studio for me", "Hello I want to do some coding",
+							 "open VS code", "Hey open VS code", "Can you open VS code for me", "hey open VS code for me"],
+					"answers": ["Sure sir, opening Visual Studio Code, please wait!"]
+				}
+			]
+		},
+		{
+			"tag": "open-music",
+			"all_questions": ["Hey! i want to listen some music", "Can you play some music for me",
+							 "Play music", "Play songs", "its music time", "its coffee time",
+							 "open music app", "its coffee time Boss", "Hello play songs for me", "hey play some music"],
+			"sub_tags": [
+				{
+					"sub": "music-open",
+					"questions": ["Hey! i want to listen some music", "Can you play some music for me",
+							 "Play music", "Play songs", "its music time", "its coffee time", "its music time",
+							 "open music app", "its coffee time Boss", "Hello play songs for me", "hey play some music"],
+					"answers": ["Sure sir, opening Spotify, please wait!"]
+				}
+			]
+		},
+		{
+			"tag": "open-wikipedia",
+			"all_questions": ["Hey! search on wikipedia about dhoni", "search on wikipedia about dhoni",
+							 "According to wikipedia who is Dhoni", "According to wikipedia what is maths", "who is dhoni according to wikipedia",
+							 "show me the search results of wikipedia on dhoni"],
+			"sub_tags": [
+				{
+					"sub": "wikipedia-open",
+					"questions": ["Hey! search on wikipedia about dhoni", "search on wikipedia about dhoni",
+							 "According to wikipedia who is Dhoni", "According to wikipedia what is maths", "who is dhoni according to wikipedia",
+							 "show me the search results of wikipedia on dhoni"],
+					"answers": ["Sure sir, looking wikipedia for information, please wait!"]
 				}
 			]
 		}

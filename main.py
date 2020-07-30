@@ -17,6 +17,8 @@ import webbrowser as wb
 import threading
 import time
 import weather
+import wikipedia
+import webbrowser
 
 try:
     from googlesearch import search
@@ -174,12 +176,27 @@ def main():
     sub_list = tags_dict.get(tag_word)
     sub_tag_word = sub_list[sub]
 
-    if sub_tag_word == "visual-studio-code-open":
+    if sub_tag_word == "wikipedia-open":
+        ans = answers_dict.get(sub_tag_word)
+        a = random.choice(ans)
+        speak(a)
+        results = wikipedia.summary(sentence, sentences=2)
+        speak("According to wikipedia")
+        speak(results)
+    elif sub_tag_word == "music-open":
+        path = "C:\\Users\\hp\\AppData\\Roaming\\Spotify\\Spotify.exe"
+        ans = answers_dict.get(sub_tag_word)
+        a = random.choice(ans)
+        speak(a)
+        os.startfile(path)
+        msg_list.insert(tk.END, "Boss: opened Spotify")
+    elif sub_tag_word == "visual-studio-code-open":
         path = "C:\\Users\\hp\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
         ans = answers_dict.get(sub_tag_word)
         a = random.choice(ans)
         speak(a)
         os.startfile(path)
+        msg_list.insert(tk.END, "Boss: opened visual studio")
     elif sub_tag_word == "call-weather-api":
         speak("Please tell me the name of the city")
         city = get_audio()
