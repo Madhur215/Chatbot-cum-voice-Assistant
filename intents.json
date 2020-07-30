@@ -218,6 +218,21 @@
 					"answers": ["Sure sir, looking wikipedia for information, please wait!"]
 				}
 			]
+		},
+		{
+			"tag": "send-mails",
+			"all_questions": ["Hey! can you send a mail", "Boss send a mail",
+							 "send a mail", "please send a mail", "compose a mail", "please compose a mail",
+							 "send an email", "Please send an email", "compose an  email"],
+			"sub_tags": [
+				{
+					"sub": "mails-send",
+					"questions": ["Hey! can you send a mail", "Boss send a mail",
+							 "send a mail", "please send a mail", "compose a mail", "please compose a mail",
+							 "send an email", "Please send an email", "compose an  email"],
+					"answers": ["Sure sir !"]
+				}
+			]
 		}
 	]
 }

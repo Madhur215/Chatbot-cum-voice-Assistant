@@ -19,6 +19,8 @@ import time
 import weather
 import wikipedia
 import webbrowser
+import smtplib
+import keys
 
 try:
     from googlesearch import search
@@ -169,6 +171,19 @@ def wish():
     speak("I am Boss sir, How can I help you")
 
 
+dict = {"Madhur": "12as1827000642@gmail.com", "Rishabh": "rishabhtyagi.2306@gmail.com",
+        "Shivam": "madhurmiracle123@gmail.com"}
+
+
+def send_mails(to, body):
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.ehlo()
+    server.starttls()
+    server.login('4as1827000224@gmail.com', keys.gmail_password())
+    server.sendmail('4as1827000224@gmail.com', to, body)
+    server.close()
+
+
 prepare_tags_list()
 
 
@@ -187,7 +202,18 @@ def main():
     sub_list = tags_dict.get(tag_word)
     sub_tag_word = sub_list[sub]
 
-    if sub_tag_word == "wikipedia-open":
+    if sub_tag_word == "mails-send":
+        try:
+            speak("Who do you want to send this mail")
+            to = get_audio()
+            speak("what should I say to " + to)
+            body = get_audio()
+            send_mails(dict[to], body)
+            speak("Your mail has been sent successfully !")
+        except Exception as e:
+            print(e)
+            speak("Sorry, Could not send this E-mail")
+    elif sub_tag_word == "wikipedia-open":
         ans = answers_dict.get(sub_tag_word)
         a = random.choice(ans)
         speak(a)
