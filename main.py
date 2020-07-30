@@ -158,6 +158,17 @@ def prepare_tags_list():
         tags_dict[curr_tag] = s_tags_list
 
 
+def wish():
+    hour = int(datetime.datetime.now().hour)
+    if 0 <= hour < 12:
+        speak("Good Morning")
+    elif 12 <= hour < 18:
+        speak("Good Afternoon")
+    else:
+        speak("Good Evening")
+    speak("I am Boss sir, How can I help you")
+
+
 prepare_tags_list()
 
 
@@ -249,5 +260,7 @@ def run():
 picture = tk.PhotoImage(file=r"C:\Users\hp\Desktop\Chatbot-cum-voice-Assistant\images\voice4.png")
 send_button = tk.Button(root, image=picture, command=run)
 send_button.pack()
+
+wish()
 
 root.mainloop()
