@@ -21,6 +21,7 @@ import wikipedia
 import webbrowser
 import smtplib
 import keys
+from PIL import Image, ImageTk
 
 try:
     from googlesearch import search
@@ -32,7 +33,7 @@ SERVICE = cl.authenticate()
 root = tk.Tk()
 root.geometry('500x600')
 heading = tk.Label(root, text="Welcome! Press the Button and ask whatever you want!",
-                   font=('verdana', 12, "bold"), fg="orange").pack()
+                   font=('montserrat', 12, "bold"), fg="black").pack()
 frame = tk.Frame(root, bg="#FFF")
 frame.place(relwidth=0.8, relheight=0.8, relx=0.1, rely=0.1)
 your_msg = tk.StringVar()
@@ -210,9 +211,11 @@ def main():
             body = get_audio()
             send_mails(dict[to], body)
             speak("Your mail has been sent successfully !")
+            msg_list.insert(tk.END, "Boss: Your mail has been sent successfully !")
         except Exception as e:
             print(e)
             speak("Sorry, Could not send this E-mail")
+            msg_list.insert(tk.END, "Boss: Sorry, Could not send this E-mail")
     elif sub_tag_word == "wikipedia-open":
         ans = answers_dict.get(sub_tag_word)
         a = random.choice(ans)
@@ -220,6 +223,7 @@ def main():
         results = wikipedia.summary(sentence, sentences=2)
         speak("According to wikipedia")
         speak(results)
+        msg_list.insert(tk.END, "Boss: " + str(results))
     elif sub_tag_word == "music-open":
         path = "C:\\Users\\hp\\AppData\\Roaming\\Spotify\\Spotify.exe"
         ans = answers_dict.get(sub_tag_word)
@@ -284,7 +288,7 @@ def run():
 
 
 picture = tk.PhotoImage(file=r"C:\Users\hp\Desktop\Chatbot-cum-voice-Assistant\images\voice4.png")
-send_button = tk.Button(root, image=picture, command=run)
+send_button = tk.Button(root, image=picture, command=run, borderwidth=0)
 send_button.pack()
 
 wish()
