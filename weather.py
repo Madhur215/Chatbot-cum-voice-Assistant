@@ -4,7 +4,7 @@ import keys
 
 def get_weather(city):
     try:
-        key = keys.weather_key()
+        key = keys.WEATHER_KEY()
         weather_key = key
         url = "https://api.openweathermap.org/data/2.5/weather"
         params = {'APPID': weather_key, 'q': city, 'units': 'imperial'}

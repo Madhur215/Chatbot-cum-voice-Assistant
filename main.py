@@ -1,6 +1,5 @@
 import numpy as np
 import json
-import random
 from model import create_model
 import random
 import tensorflow as tf
@@ -11,17 +10,13 @@ import speech_recognition as sr
 import subprocess
 import datetime
 import tkinter as tk
-from tkinter import Text
 import os
 import webbrowser as wb
 import threading
-import time
 import weather
 import wikipedia
-import webbrowser
 import smtplib
 import keys
-from PIL import Image, ImageTk
 
 try:
     from googlesearch import search
@@ -172,15 +167,13 @@ def wish():
     speak("I am Boss sir, How can I help you")
 
 
-dict = {"Madhur": "12as1827000642@gmail.com", "Rishabh": "rishabhtyagi.2306@gmail.com",
-        "Shivam": "madhurmiracle123@gmail.com"}
 
 
 def send_mails(to, body):
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.ehlo()
     server.starttls()
-    server.login('4as1827000224@gmail.com', keys.gmail_password())
+    server.login(keys.EMAIL, keys.PASSWORD)
     server.sendmail('4as1827000224@gmail.com', to, body)
     server.close()
 
@@ -209,7 +202,7 @@ def main():
             to = get_audio()
             speak("what should I say to " + to)
             body = get_audio()
-            send_mails(dict[to], body)
+            send_mails(keys.DICT[to], body)
             speak("Your mail has been sent successfully !")
             msg_list.insert(tk.END, "Boss: Your mail has been sent successfully !")
         except Exception as e:
@@ -225,14 +218,14 @@ def main():
         speak(results)
         msg_list.insert(tk.END, "Boss: " + str(results))
     elif sub_tag_word == "music-open":
-        path = "C:\\Users\\hp\\AppData\\Roaming\\Spotify\\Spotify.exe"
+        path = keys.PATH_MUSIC
         ans = answers_dict.get(sub_tag_word)
         a = random.choice(ans)
         speak(a)
         os.startfile(path)
         msg_list.insert(tk.END, "Boss: opened Spotify")
     elif sub_tag_word == "visual-studio-code-open":
-        path = "C:\\Users\\hp\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+        path = keys.PATH_VS_CODE
         ans = answers_dict.get(sub_tag_word)
         a = random.choice(ans)
         speak(a)
@@ -287,7 +280,7 @@ def run():
     main_thread.start()
 
 
-picture = tk.PhotoImage(file=r"C:\Users\hp\Desktop\Chatbot-cum-voice-Assistant\images\voice4.png")
+picture = tk.PhotoImage(file=keys.PATH_IMAGE)
 send_button = tk.Button(root, image=picture, command=run, borderwidth=0)
 send_button.pack()
 
