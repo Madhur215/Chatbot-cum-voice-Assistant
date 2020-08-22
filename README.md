@@ -9,7 +9,7 @@ This a chatbot cum voice assistant that can be used for different purposes. It c
 7. Get weather report of your city.
 
 ## Screenshots
-![Image](/images/demo.jpg)
+![Image](/images/chatbot.jpg)
 
 ## Installation
 * All the modules which are required for this application are stated in requirements.txt file. 
