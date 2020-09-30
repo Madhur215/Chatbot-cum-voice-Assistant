@@ -18,7 +18,7 @@ To install all of them rum the following command:
 pip3 install -r requirements.txt
 ```
 
-* Enable Google Calender API with your account here: https://developers.google.com/calendar/quickstart/python?authuser=3
+* Enable Google Calender API with your account here: https://developers.google.com/calendar/quickstart/python
 * Get a weather api key by creating your account on https://openweathermap.org/api
 * Create a keys.py file and add the following:
     * EMAIL = "your email id to send emails from"
