@@ -6,7 +6,8 @@ This a chatbot cum voice assistant that can be used for different purposes. It c
 4. Make notes to write down something using notepad.
 5. Send emails using Gmail.
 6. Open music and vs code application.
-7. Get weather report of your city.
+7. Search directly anything on Wikipedia.
+8. Get real time weather report of your city.
 
 ## Screenshots
 ![Image](/images/chatbot.jpg)
