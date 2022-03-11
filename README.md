@@ -27,7 +27,7 @@ pip3 install -r requirements.txt
     * DICT = "A dictionary to store the emails of recipients"
     * WEATHER_KEY = "your weather api key"
 
-## Working
+## Working of the project
 The working of the assistant is pretty simple.
 First, a simple GUI shows up, in which you can see all your ongoing conversation.
 When we click on the speak icon, it detects the voice and converts it to text using
