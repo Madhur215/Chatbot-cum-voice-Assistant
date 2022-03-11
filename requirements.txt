@@ -22,3 +22,4 @@ SpeechRecognition==3.8.1
 tensorboard==2.1.0
 tensorflow==1.14.0
 tensorflow-estimator==2.1.0
+#openpyxl==3.0.2
