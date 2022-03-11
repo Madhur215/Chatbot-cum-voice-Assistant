@@ -9,7 +9,7 @@ This a chatbot cum voice assistant that can be used for different purposes. It c
 7. Search directly anything on Wikipedia.
 8. Get real time weather report of your city.
 
-## Screenshots
+## Screenshots of the project
 ![Image](/images/chatbot.jpg)
 
 ## Installation
