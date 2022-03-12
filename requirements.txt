@@ -15,7 +15,7 @@ Keras-Applications==1.0.8
 Keras-Preprocessing==1.1.0
 openpyxl==3.0.3
 pickleshare==0.7.5
-Pillow==6.2.0
+Pillow==9.0.1
 pyttsx3==2.87
 pytz==2017.3
 SpeechRecognition==3.8.1
