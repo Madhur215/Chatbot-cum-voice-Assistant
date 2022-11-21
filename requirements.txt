@@ -20,6 +20,6 @@ pyttsx3==2.87
 pytz==2017.3
 SpeechRecognition==3.8.1
 tensorboard==2.1.0
-tensorflow==1.14.0
+tensorflow==2.9.3
 tensorflow-estimator==2.1.0
 #openpyxl==3.0.2
